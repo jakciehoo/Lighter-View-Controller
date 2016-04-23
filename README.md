@@ -1,3 +1,5 @@
+******iOS架构师之路：控制器（View Controller）瘦身设计******
+
 **前言**
 
 　　古老的MVC架构是容易被iOS开发者理解和接受的设计模式，但是由于iOS开发的项目功能越来越负责庞大，项目代码也随之不断壮大，MVC的模糊定义导致我们的业务开发工程师很容易把大量的代码写到视图控制器中，行业中对这种控制器有个专业词汇Massive ViewControler（臃肿的视图控制器）。代码臃肿导致可读性可维护性差，而且这种不清晰的设计还有许多的副作用，比如代码重用性差。作为架构师需要关注项目的代码质量。指导业务开发工程师写出高质量，高健壮性，高可用的代码也是很重要的工作。因此需要知道一些为控制器瘦身的技巧，并在项目中帮助业务开发工程师合理的运用它们。本文翻译一篇国外优秀文章：[Lighter View Controllers](https://www.objc.io/issues/1-view-controllers/lighter-view-controllers/)。
@@ -99,7 +101,7 @@ self.tableView.dataSource = photosArrayDataSource;
 　　然而，假如你把代码实现移至 User 的 Category 中，控制器中的代码将会更简洁、更清晰。
 　　
 将以上代码移到User+Extension.m中 
- ```python
+```python
 //User+Extension.m
 - (NSArray*)currentPriorities {
     NSDate* now = [NSDate date];
@@ -107,16 +109,16 @@ self.tableView.dataSource = photosArrayDataSource;
     NSPredicate* predicate = [NSPredicate predicateWithFormat:formatString, now, now];
     return [[self.priorities filteredSetUsingPredicate:predicate] allObjects];
 }
-  ```
+```
   
 　　ViewController.m 中的代码可以改成这个鬼样子，是不是明显要简洁许多，可读性强很多呢。
 　　
- ```python
+```python
 //ViewController.m
 - (void)loadPriorities {
     self.priorities = [self.user currentPriorities];
 }
-  ```
+```
   
 　　实际开发中，有些代码很难移至 model 对象中，但是很明显这些代码与 model 对象有关。针对这种情况，我们可以创建一个 store 类，并把相关代码迁移进去。
  
@@ -124,7 +126,7 @@ self.tableView.dataSource = photosArrayDataSource;
 **创建Store类**
 
 　　在这个示例项目工程中，我们有一段用于从本地文件加载数据并解析的代码:
- ```python
+```python
 - (void)readArchive {
     NSBundle* bundle = [NSBundle bundleForClass:[self class]];
     NSURL *archiveURL = [bundle URLForResource:@"photodata"
@@ -138,7 +140,7 @@ self.tableView.dataSource = photosArrayDataSource;
     _photos = [unarchiver decodeObjectOfClass:[NSArray class] forKey:@"photos"];
     [unarchiver finishDecoding];
 }
-  ```
+```
   
 　　*控制器*不应该负责以上的工作，控制器只要负责数据调度就可以了，数据获取的工作我们完全可以交给 *store* 对象来负责。通过将这些代码从 *控制器*中抽离出来，我们可以更容易复用、测试这些方法、同时让*控制器*变得更轻巧( *Store* 对象一般负责数据的加载、缓存、持久化。*Store* 对象也经常被称作 *Service Layer* 对象，或者 *Repository* 对象)。
 　　
