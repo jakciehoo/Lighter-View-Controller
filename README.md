@@ -74,7 +74,6 @@ cellIdentifier:PhotoCellIdentifier
 configureCellBlock:configureCell];
 self.tableView.dataSource = photosArrayDataSource;
  ```
- 
 　　通过上面的方法，你就可以把设置 Cell 视图的工作从 控制器中抽离出来。现在你不需要再关心indexPath如何与 NSArrary 中的元素如何关联，当你需要将数组中的元素在其它 UITableView 中展示时你可以重用以上代码。你也可以在 ArrayDataSource 中实现更多的方法，比如`tableView:commitEditingStyle:forRowAtIndexPath:`。
 　　这样做还能带来额外的好处，我们还可以针对这部分实现编写单独的单元测试。不仅仅针对NSArray，我们可以使用这种分离思路处理其他数据容器（比如`NSDictionary`）。
 　　该技巧同样适用于其他 Protocol ,比如 `UICollectionViewDataSource` 。通过该协议，你可以定义出各种各样的 UICollectionViewCell 。假如有一天，你需要在代码在使用到 UICollectionView 来替代当前的 UITableView，你只需要修改几行 控制器中的代码即可完成替换。你甚至能够让你的 DataSource 类同时实现 `UICollectionViewDataSource` 协议和` UITableViewDataSource `协议。
