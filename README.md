@@ -1,6 +1,8 @@
 **前言**
+
 　　古老的MVC架构是容易被iOS开发者理解和接受的设计模式，但是由于iOS开发的项目功能越来越负责庞大，项目代码也随之不断壮大，MVC的模糊定义导致我们的业务开发工程师很容易把大量的代码写到视图控制器中，行业中对这种控制器有个专业词汇Massive ViewControler（臃肿的视图控制器）。代码臃肿导致可读性可维护性差，而且这种不清晰的设计还有许多的副作用，比如代码重用性差。作为架构师需要关注项目的代码质量。指导业务开发工程师写出高质量，高健壮性，高可用的代码也是很重要的工作。因此需要知道一些为控制器瘦身的技巧，并在项目中帮助业务开发工程师合理的运用它们。本文翻译一篇国外优秀文章：[Lighter View Controllers](https://www.objc.io/issues/1-view-controllers/lighter-view-controllers/)。
 示例代码下载地址：[JackieHoo's GitHub](https://github.com/jakciehoo/Lighter-View-Controller/)
+
 ** **
 **分离数据源(Data Source)等协议(Protocol)**
 　　瘦身控制器的有效方法之一就是将实现 UITableViewDataSource 协议相关的代码封装成一个类(比如本文中的 ArraryDataSource )。如果你多用几次这个设计，你就会创建复用性高的封装类。
