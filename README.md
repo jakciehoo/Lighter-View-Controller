@@ -1,4 +1,4 @@
-******iOS架构师之路：控制器（View Controller）瘦身设计******
+#`iOS架构师之路：控制器（View Controller）瘦身设计`
 
 **前言**
 
@@ -141,7 +141,6 @@ self.tableView.dataSource = photosArrayDataSource;
     [unarchiver finishDecoding];
 }
 ```
-  
 　　*控制器*不应该负责以上的工作，控制器只要负责数据调度就可以了，数据获取的工作我们完全可以交给 *store* 对象来负责。通过将这些代码从 *控制器*中抽离出来，我们可以更容易复用、测试这些方法、同时让*控制器*变得更轻巧( *Store* 对象一般负责数据的加载、缓存、持久化。*Store* 对象也经常被称作 *Service Layer* 对象，或者 *Repository* 对象)。
 　　
 　　
