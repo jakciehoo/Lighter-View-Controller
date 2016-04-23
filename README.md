@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 objc.io sample project for issue #1: lighter view controllers
 ===
 
@@ -12,3 +13,7 @@ To get the tests to run, you need to install the OCMock dependency by running th
 
     git submodule init
     git submodule update
+=======
+# Lighter-View-Controller
+瘦身控制器的教程和代码示例
+>>>>>>> d9f5e862fd71b27e1d23f194e8c235b5d7ad4992
